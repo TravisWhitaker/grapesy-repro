@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+message M {
+  string x = 1;
+}
+
+service GR {
+  rpc ServerStream(M) returns (stream M);
+}

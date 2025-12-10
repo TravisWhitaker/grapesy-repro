@@ -1,0 +1,71 @@
+cabal-version:       3.0
+
+name:                gr
+version:             0.1.0.0
+synopsis:            GR
+description:         GR
+homepage:            https://github.com/TravisWhitaker/grapesy-repro
+bug-reports:         https://github.com/TravisWhitaker/grapesy-repro
+license:             NONE
+-- license-file:        LICENSE
+author:              Travis Whitaker
+maintainer:          travis@anduril.com
+copyright:           Anduril Industries 2025
+category:            Network
+build-type:          Simple
+-- extra-source-files:  CHANGELOG.md
+
+common buildopts
+  default-language: Haskell2010
+  ghc-options: -O2
+  ghc-options:
+    -- -Werror
+    -Weverything -Widentities -Wno-all-missed-specialisations
+    -Wno-missed-specialisations -Wno-implicit-prelude
+    -Wno-missing-deriving-strategies -Wno-missing-export-lists
+    -Wno-missing-import-lists -Wno-missing-kind-signatures
+    -Wno-missing-local-signatures -Wno-missing-safe-haskell-mode
+    -Wno-monomorphism-restriction -Wno-safe -Wno-unsafe -Wpartial-fields
+    -Wno-prepositive-qualified-module
+
+common exeopts
+  ghc-options: -threaded -rtsopts "-with-rtsopts=-N -T"
+
+library gr-proto
+  import: buildopts
+  hs-source-dirs: src
+  exposed-modules: Proto.Gr
+                   Proto.Gr_Fields
+  build-depends:    base >=4.10 && <5
+                  , bytestring
+                  , deepseq
+                  , proto-lens-runtime
+                  , text
+                  , vector
+
+executable gr-server
+  import:
+    , buildopts
+    , exeopts
+  hs-source-dirs: gr-server
+  main-is: Main.hs
+  build-depends:
+    , base >=4.10 && <5
+    , grapesy == 1.1.1
+    , lens
+    , proto-lens
+    , text
+    , gr-proto
+    
+-- executable gr-client
+--   import:
+--     , buildopts
+--     , exeopts
+--   hs-source-dirs: gr-client
+--   main-is: Main.hs
+--   build-depends:
+--     , base >=4.10 && <5
+--     , grapesy == 1.1.1
+--     , lens
+--     , proto-lens
+--     , text
