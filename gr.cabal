@@ -36,12 +36,7 @@ library gr-proto
   hs-source-dirs: src
   exposed-modules: Proto.Gr
                    Proto.Gr_Fields
-  build-depends:    base >=4.10 && <5
-                  , bytestring
-                  , deepseq
-                  , proto-lens-runtime
-                  , text
-                  , vector
+  build-depends:   proto-lens-runtime
 
 executable gr-server
   import:
@@ -51,21 +46,19 @@ executable gr-server
   main-is: Main.hs
   build-depends:
     , base >=4.10 && <5
+    , ekg
     , grapesy == 1.1.1
-    , lens
-    , proto-lens
+    , gr-proto
+
+executable gr-client
+  import:
+    , buildopts
+    , exeopts
+  hs-source-dirs: gr-client
+  main-is: Main.hs
+  build-depends:
+    , base >=4.10 && <5
+    , grapesy == 1.1.1
     , text
     , gr-proto
     
--- executable gr-client
---   import:
---     , buildopts
---     , exeopts
---   hs-source-dirs: gr-client
---   main-is: Main.hs
---   build-depends:
---     , base >=4.10 && <5
---     , grapesy == 1.1.1
---     , lens
---     , proto-lens
---     , text
